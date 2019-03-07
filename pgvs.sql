@@ -1,20 +1,21 @@
 
--- create an automatic history on the table _table
+-- create a trigger filling {_schema}.{_table}_h when INSERT, UPDATE or DELETED
+-- are performed on {_schema}.{_table}
 CREATE OR REPLACE FUNCTION pgvs_create_history_trigger( _table text, _schema text DEFAULT 'public') RETURNS void AS $$
 DECLARE
 	history_table_name text;
 	trigger_name text;
 BEGIN
 	-- TODO quote_ident( _table )
-
 	history_table_name := _schema || '.' || _table || '_h';
+	-- TODO find a better name (trigger are executed in alphabetic order)
 	trigger_name := _schema || '.' || _table || '_tg_history';
 
-	-- create trigger
+	-- generate trigger procedure
 	execute $x$
 	create or replace function $x$ || trigger_name || $x$() returns trigger as $t$
 		begin
-		-- handle DELETE, UPpgvs_date and INSERT
+		-- handle DELETE, UPDATE and INSERT
 		-- auto-increment pgvs_version and auto-define pgvs_date
 		IF (TG_OP = 'DELETE') THEN
 			OLD.pgvs_version := OLD.pgvs_version + 1 ;

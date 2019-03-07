@@ -7,7 +7,7 @@ Experimental PL/pgSQL helper to create a trigger filling an history table with a
 ## How it works?
 
 * For a given table `{schema}.{table}` and an history table named `{schema}.{table}_h`
-* `SELECT pgvs_create_history_trigger(_table,_schema)` creates a trigger filling `{schema}.{table}_h` when operations are performed on `{schema}.{table}`
+* `SELECT pgvs_create_history_trigger(_table,_schema)` creates a trigger filling `{schema}.{table}_h` when INSERT, UPDATE or DELETE are performed on `{schema}.{table}`
 
 ## Requirements
 
@@ -30,12 +30,16 @@ Experimental PL/pgSQL helper to create a trigger filling an history table with a
 ```bash
 createdb pgvs
 psql -d pgvs -f pgvs.sql
-psql -d pgvs -f sample/schema.sql
+psql -d pgvs -f sample/poi.schema.sql
 ```
 
 ### 2) Edit sample.poi as usual
 
-Edit table using QuantumGIS for example.
+```bash
+psql -d pgvs -f sample/poi.data.sql
+```
+
+(you may also edit table using QuantumGIS for example)
 
 ### 3) See what's happen
 
@@ -72,7 +76,9 @@ select * from sample.poi_h t
 
 They are no requirements on the `id` type. You may use `uuid` instead of `serial`.
 
+## License
 
+[MIT](LICENSE)
 
 
 
