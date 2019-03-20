@@ -7,7 +7,7 @@ PL/pgSQL helper to create a trigger filling an history table with all changes ov
 ## How it works?
 
 * For a given table `{schema}.{table}` and an history table named `{schema}.{table}_h`
-* `SELECT pghs_create_history_trigger(_table,_schema)` creates a trigger filling `{schema}.{table}_h` when INSERT, UPDATE or DELETE are performed on `{schema}.{table}`
+* `pghs_create_history_trigger(_table,_schema)` creates a trigger filling `{schema}.{table}_h` when INSERT, UPDATE or DELETE are performed on `{schema}.{table}`
 
 ## Requirements
 
@@ -72,7 +72,7 @@ select * from sample.poi_h t
 ;
 ```
 
-### Offline edition
+### Offline or distributed edition
 
 They are no requirements on the `id` type. You may use `uuid` instead of `serial`.
 
