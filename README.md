@@ -46,18 +46,16 @@ psql -d pghs -f sample/poi.data.sql
 Each time a row is INSERTED, UPDATED or DELETED in `sample.poi`, the row is duplicated in `sample.poi_h`
 
 
-## Advanced used
+## How to deal with schema updates?
 
-### Alter table columns
-
-Don't forget to update both tables :
+No need to re-create the trigger, but don't forget to update both tables :
 
 ```sql
 ALTER table sample.poi add column title text;
 ALTER table sample.poi_h add column title text;
 ```
 
-(no need to re-create the trigger)
+## Advanced used
 
 ### Retrieve table state at a given time
 
