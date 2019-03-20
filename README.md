@@ -1,13 +1,13 @@
-# pgvs - PostgreSQL Versioning System
+# pghs - PostgreSQL History System
 
 ## Description
 
-Experimental PL/pgSQL helper to create a trigger filling an history table with all changes over time.
+PL/pgSQL helper to create a trigger filling an history table with all changes over time.
 
 ## How it works?
 
 * For a given table `{schema}.{table}` and an history table named `{schema}.{table}_h`
-* `SELECT pgvs_create_history_trigger(_table,_schema)` creates a trigger filling `{schema}.{table}_h` when INSERT, UPDATE or DELETE are performed on `{schema}.{table}`
+* `SELECT pghs_create_history_trigger(_table,_schema)` creates a trigger filling `{schema}.{table}_h` when INSERT, UPDATE or DELETE are performed on `{schema}.{table}`
 
 ## Requirements
 
@@ -16,11 +16,11 @@ Experimental PL/pgSQL helper to create a trigger filling an history table with a
 
 | name         | type             | description                |
 | ------------ | ---------------- | -------------------------- |
-| pgvs_version | integer NOT NULL | 1, 2, 3...                 |
-| pgvs_date    | timestamp        | `NOW()` (transaction time) |
-| pgvs_state   | char(1)          | 'I', 'U' or 'D'            |
+| pghs_version | integer NOT NULL | 1, 2, 3...                 |
+| pghs_date    | timestamp        | `NOW()` (transaction time) |
+| pghs_state   | char(1)          | 'I', 'U' or 'D'            |
 
-* `(id,pgvs_version)` is the primary key of `{schema}.{table}_h` (it allows conflict detection)
+* `(id,pghs_version)` is the primary key of `{schema}.{table}_h` (it allows conflict detection)
 
 
 ## Sample
@@ -28,15 +28,15 @@ Experimental PL/pgSQL helper to create a trigger filling an history table with a
 ### 1) Prepare database
 
 ```bash
-createdb pgvs
-psql -d pgvs -f pgvs.sql
-psql -d pgvs -f sample/poi.schema.sql
+createdb pghs
+psql -d pghs -f pghs.sql
+psql -d pghs -f sample/poi.schema.sql
 ```
 
 ### 2) Edit sample.poi as usual
 
 ```bash
-psql -d pgvs -f sample/poi.data.sql
+psql -d pghs -f sample/poi.data.sql
 ```
 
 (you may also edit table using QuantumGIS for example)
@@ -63,11 +63,11 @@ ALTER table sample.poi_h add column title text;
 
 ```sql
 select * from sample.poi_h t
-	where t.pgvs_version = (
-		select max(pgvs_version)
+	where t.pghs_version = (
+		select max(pghs_version)
 			from sample.poi_h t2
 		where t2.id = t.id
-		and t2.pgvs_date < '2019-01-31 11:36:00'::timestamp
+		and t2.pghs_date < '2019-01-31 11:36:00'::timestamp
 	)
 ;
 ```
