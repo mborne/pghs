@@ -80,5 +80,14 @@ They are no requirements on the `id` type. You may use `uuid` instead of `serial
 
 [MIT](LICENSE)
 
+## See also
 
+This code is an attempt to generalize the following approach :
+
+* [PostgreSQL - Audit trigger](https://wiki.postgresql.org/wiki/Audit_trigger)
+* [stackoverflow - How can I use a Postgres Triggers to store changes](https://stackoverflow.com/a/1297077)
+
+Other kind of audit trigger exists :
+
+* [2ndQuadrant/audit-trigger](https://github.com/2ndQuadrant/audit-trigger)
 
