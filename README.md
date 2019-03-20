@@ -74,6 +74,10 @@ select * from sample.poi_h t
 
 They are no requirements on the `id` type. You may use `uuid` instead of `serial`.
 
+### Customize pghs_version, pghs_date or pghs_state
+
+Feel free to adapt "pghs_create_history_trigger" creating a dedicated version for your database!
+
 ## License
 
 [MIT](LICENSE)
