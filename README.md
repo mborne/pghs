@@ -1,10 +1,10 @@
 # pghs - PostgreSQL History System
 
-**2019 experimentation, archived**
-
-## Description
-
 PL/pgSQL helper to create a trigger filling an history table with all changes over time.
+
+## Status
+
+**2019 experimentation, archived**
 
 ## How it works?
 
